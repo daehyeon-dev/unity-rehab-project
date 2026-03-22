@@ -6,13 +6,20 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    [Header("Move Settings")]
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float moveRange = 2f;
 
+    [Header("Attack Settings")]
+    [SerializeField] private Transform attackPoint;
+    [SerializeField] private float attackRange = 0.6f;
+    [SerializeField] private LayerMask playerLayer;
+    [SerializeField] private float attackCooldown = 1f;
+
     private Vector2 startPosition;
     private int direction = 1;
-
     private Rigidbody2D rb;
+    private float lastAttackTime;
 
     private void Awake()
     {
@@ -27,6 +34,11 @@ public class EnemyController : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+    }
+
+    private void Update()
+    {
+        TryAttack();
     }
 
     private void Move()
@@ -52,6 +64,24 @@ public class EnemyController : MonoBehaviour
         transform.localScale = scale;
     }
 
+    private void TryAttack()
+    {
+        if (Time.time < lastAttackTime + attackCooldown)
+            return;
+
+        Collider2D hitPlayer = Physics2D.OverlapCircle(
+            attackPoint.position,
+            attackRange,
+            playerLayer
+        );
+
+        if (hitPlayer == null)
+            return;
+
+        lastAttackTime = Time.time;
+        Debug.Log($"Enemy attack hit: {hitPlayer.name}");
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -72,5 +102,11 @@ public class EnemyController : MonoBehaviour
         Gizmos.DrawLine(left, right);
         Gizmos.DrawSphere(left, 0.1f);
         Gizmos.DrawSphere(right, 0.1f);
+
+        if (attackPoint != null)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        }
     }
 }

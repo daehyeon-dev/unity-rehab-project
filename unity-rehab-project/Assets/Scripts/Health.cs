@@ -6,8 +6,15 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 100;
 
+    [Header("Hit Effect")]
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private float hitFlashDuration = 0.1f;
+    [SerializeField] private Color hitColor = Color.red;
+
     private int currentHealth;
     private bool isDead;
+
+    private Color originalColor;
 
     public int CurrentHealth => currentHealth;
     public int MaxHealth => maxHealth;
@@ -16,6 +23,11 @@ public class Health : MonoBehaviour
     private void Awake()
     {
         currentHealth = maxHealth;
+
+        if(spriteRenderer != null)
+        {
+            originalColor = spriteRenderer.color;
+        }
     }
 
 
@@ -29,10 +41,35 @@ public class Health : MonoBehaviour
 
         Debug.Log($"{gameObject.name} took {damage} damage. Current HP: {currentHealth}/{maxHealth}");
 
+        StartCoroutine(HitFlash());
+
         if(currentHealth <= 0)
         {
-            isDead = true;
-            Debug.Log($"{gameObject.name} is dead.");
+            Die();
         }
+    }
+
+    private IEnumerator HitFlash()
+    {
+        if (spriteRenderer == null)
+            yield break;
+
+        spriteRenderer.color = hitColor;
+
+        yield return new WaitForSeconds(hitFlashDuration);
+
+        spriteRenderer.color = originalColor;
+    }
+
+    private void Die()
+    {
+        if (isDead)
+            return;
+
+        isDead = true;
+
+        Debug.Log($"{gameObject.name} died");
+
+        gameObject.SetActive(false);
     }
 }

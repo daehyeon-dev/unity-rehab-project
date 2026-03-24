@@ -21,10 +21,12 @@ public class EnemyController : MonoBehaviour
     private int direction = 1;
     private Rigidbody2D rb;
     private float lastAttackTime;
+    private Health health;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        health = GetComponent<Health>();
     }
     // Start is called before the first frame update
     private void Start()
@@ -34,6 +36,8 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (health != null && health.IsDead)
+            return;
         Move();
     }
 
@@ -83,7 +87,7 @@ public class EnemyController : MonoBehaviour
         
         Health targetHealth = hitPlayer.GetComponent<Health>();
 
-        if(targetHealth != null)
+        if(targetHealth != null && !targetHealth.IsDead)
         {
             targetHealth.TakeDamage(attackDamage);
         }

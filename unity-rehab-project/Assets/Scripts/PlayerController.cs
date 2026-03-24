@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
 
         Health targetHealth = hitEnemy.GetComponent<Health>();
 
-        if(targetHealth != null)
+        if(targetHealth != null && !targetHealth.IsDead)
         {
             targetHealth.TakeDamage(attackDamage);
         }

@@ -4,15 +4,35 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    // Start is called before the first frame update
-    private void Start()
+    [SerializeField] private int maxHealth = 100;
+
+    private int currentHealth;
+    private bool isDead;
+
+    public int CurrentHealth => currentHealth;
+    public int MaxHealth => maxHealth;
+    public bool IsDead => isDead;
+
+    private void Awake()
     {
-        
+        currentHealth = maxHealth;
     }
 
-    // Update is called once per frame
-    private void Update()
+
+    public void TakeDamage(int damage)
     {
-        
+        if (isDead)
+            return;
+
+        currentHealth -= damage;
+        currentHealth = Mathf.Max(currentHealth, 0);
+
+        Debug.Log($"{gameObject.name} took {damage} damage. Current HP: {currentHealth}/{maxHealth}");
+
+        if(currentHealth <= 0)
+        {
+            isDead = true;
+            Debug.Log($"{gameObject.name} is dead.");
+        }
     }
 }

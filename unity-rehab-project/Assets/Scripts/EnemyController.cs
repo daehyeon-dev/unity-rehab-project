@@ -15,6 +15,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float attackRange = 0.6f;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private float attackCooldown = 1f;
+    [SerializeField] private int attackDamage = 10;
 
     private Vector2 startPosition;
     private int direction = 1;
@@ -79,7 +80,13 @@ public class EnemyController : MonoBehaviour
             return;
 
         lastAttackTime = Time.time;
-        Debug.Log($"Enemy attack hit: {hitPlayer.name}");
+        
+        Health targetHealth = hitPlayer.GetComponent<Health>();
+
+        if(targetHealth != null)
+        {
+            targetHealth.TakeDamage(attackDamage);
+        }
     }
 
     private void OnDrawGizmosSelected()

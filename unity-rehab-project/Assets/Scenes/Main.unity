@@ -610,6 +610,7 @@ GameObject:
   - component: {fileID: 1605219261}
   - component: {fileID: 1605219260}
   - component: {fileID: 1605219259}
+  - component: {fileID: 1605219264}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -637,6 +638,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   attackCooldown: 1
+  attackDamage: 10
 --- !u!61 &1605219260
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -777,6 +779,19 @@ Transform:
   - {fileID: 1005712167}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1605219264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605219258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea05a7a5ce2c2e44e84a07d2f36da408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 50
 --- !u!1 &1738663663
 GameObject:
   m_ObjectHideFlags: 0
@@ -858,6 +873,7 @@ GameObject:
   - component: {fileID: 1835380831}
   - component: {fileID: 1835380830}
   - component: {fileID: 1835380829}
+  - component: {fileID: 1835380834}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -884,6 +900,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   attackCooldown: 0.5
+  attackDamage: 10
 --- !u!61 &1835380830
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1024,6 +1041,19 @@ Transform:
   - {fileID: 1582190811}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1835380834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835380828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea05a7a5ce2c2e44e84a07d2f36da408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

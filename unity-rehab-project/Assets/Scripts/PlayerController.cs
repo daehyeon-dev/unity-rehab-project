@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float attackRange = 0.5f;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private float attackCooldown = 0.5f;
+    [SerializeField] private int attackDamage = 10;
 
     private Rigidbody2D rb;
     private float moveInput;
@@ -63,13 +64,17 @@ public class PlayerController : MonoBehaviour
             enemyLayer
         );
 
-        if(hitEnemy != null)
-        {
-            Debug.Log($"Attack hit: {hitEnemy.name}");
-        }
-        else
+        if(hitEnemy == null)
         {
             Debug.Log("Attack missed");
+            return;
+        }
+
+        Health targetHealth = hitEnemy.GetComponent<Health>();
+
+        if(targetHealth != null)
+        {
+            targetHealth.TakeDamage(attackDamage);
         }
     }
 

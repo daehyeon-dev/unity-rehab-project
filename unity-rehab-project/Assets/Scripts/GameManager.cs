@@ -1,18 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("References")]
+    [SerializeField] private Health playerHealth;
+    [SerializeField] private Health enemyHealth;
+
+    [Header("UI")]
+    [SerializeField] private TMP_Text playerHpText;
+    [SerializeField] private TMP_Text enemyHpText;
+    
+    public void Update()
     {
-        Debug.Log("Game Start");
+        UpdateHealthUI();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void UpdateHealthUI()
     {
-        
+        if (playerHealth != null && playerHpText != null)
+        {
+            playerHpText.text = $"Player HP: {playerHealth.CurrentHealth} / {playerHealth.MaxHealth}";
+        }
+        if (enemyHealth != null && enemyHpText != null)
+        {
+            enemyHpText.text = $"Enemy HP: {enemyHealth.CurrentHealth} / {enemyHealth.MaxHealth}";
+        }
     }
 }
